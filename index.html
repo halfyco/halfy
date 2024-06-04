@@ -88,7 +88,7 @@
             const currentYear = new Date().getFullYear();
             const inputDate = new Date(currentYear, month - 1, day);
 
-            if (!name || isNaN(inputDate)) {
+            if (!name || isNaN(inputDate.getTime())) {
                 alert("Please enter your name and a valid date.");
                 return;
             }
@@ -171,6 +171,7 @@ END:VCALENDAR`;
     </div>
 </body>
 </html>
+
 
 
 
