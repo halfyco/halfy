@@ -35,7 +35,14 @@
             margin: 0;
             color: #000;
         }
-        .container input {
+        .container label {
+            display: block;
+            margin: 10px 0;
+            font-size: 1.2em;
+            color: #000;
+        }
+        .container input,
+        .container select {
             margin: 10px 0;
             padding: 10px;
             font-size: 1em;
@@ -76,8 +83,8 @@
     <script>
         function addSixMonths() {
             const name = document.getElementById("name").value;
-            const dateInput = document.getElementById("date").value;
-            const [month, day] = dateInput.split('-').map(Number);
+            const month = parseInt(document.getElementById("month").value);
+            const day = parseInt(document.getElementById("day").value);
             const currentYear = new Date().getFullYear();
             const inputDate = new Date(currentYear, month - 1, day);
 
@@ -92,7 +99,7 @@
             const resultMonth = resultDate.toLocaleString('default', { month: 'long' });
             const resultDay = String(resultDate.getDate()).padStart(2, '0');
             const resultDateString = `${resultDay} ${resultMonth}`;
-            document.getElementById("result").innerText = `${name}, your halfy day is on: ${resultDateString}`;
+            document.getElementById("result").innerText = `${name}, your Halfy Day is on: ${resultDateString}`;
             document.getElementById("downloadLink").style.display = "block";
             document.getElementById("downloadLink").setAttribute('href', generateICS(resultDate, name));
         }
@@ -101,7 +108,7 @@
             const event = {
                 start: date,
                 title: `${name}'s Halfy Day`,
-                description: "Celebrate your halfy day!",
+                description: "Celebrate your Halfy Day!",
                 duration: { hours: 24 },
             };
 
@@ -135,8 +142,24 @@ END:VCALENDAR`;
         <h1>Halfy Day Calculator</h1>
         <label for="name">Enter your name:</label>
         <input type="text" id="name">
-        <label for="date">Enter your date (MM-DD):</label>
-        <input type="text" id="date" placeholder="MM-DD" pattern="\d{2}-\d{2}">
+        <label for="date">Enter your date:</label>
+        <select id="month">
+            <option value="1">January</option>
+            <option value="2">February</option>
+            <option value="3">March</option>
+            <option value="4">April</option>
+            <option value="5">May</option>
+            <option value="6">June</option>
+            <option value="7">July</option>
+            <option value="8">August</option>
+            <option value="9">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
+        </select>
+        <select id="day">
+            ${Array.from({ length: 31 }, (_, i) => `<option value="${i + 1}">${i + 1}</option>`).join('')}
+        </select>
         <button onclick="addSixMonths()">Calculate Halfy Day</button>
         <p id="result"></p>
         <a id="downloadLink" href="#" download="halfy-day.ics" style="display: none;">
@@ -148,6 +171,7 @@ END:VCALENDAR`;
     </div>
 </body>
 </html>
+
 
 
 
