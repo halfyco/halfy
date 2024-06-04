@@ -20,11 +20,11 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #f0f0f0;
+            background-color: #ffeb3b;
         }
         .container {
             text-align: center;
-            background-color: #ffeb3b;
+            background-color: #fff;
             border: 5px solid #ffeb3b;
             border-radius: 50%;
             padding: 50px;
@@ -88,9 +88,9 @@
             const resultDate = new Date(inputDate);
             resultDate.setMonth(resultDate.getMonth() + 6);
 
-            const resultMonth = String(resultDate.getMonth() + 1).padStart(2, '0');
+            const resultMonth = resultDate.toLocaleString('default', { month: 'long' });
             const resultDay = String(resultDate.getDate()).padStart(2, '0');
-            const resultDateString = `${resultMonth}-${resultDay}`;
+            const resultDateString = `${resultDay} ${resultMonth}`;
             document.getElementById("result").innerText = `${name}, your halfy day is on: ${resultDateString}`;
             document.getElementById("downloadLink").style.display = "block";
             document.getElementById("downloadLink").setAttribute('href', generateICS(resultDate, name));
@@ -134,7 +134,7 @@ END:VCALENDAR`;
         <h1>Halfy Day Calculator</h1>
         <label for="name">Enter your name:</label>
         <input type="text" id="name">
-        <label for="date">Enter your birth date (MM-DD):</label>
+        <label for="date">Enter your date (MM-DD):</label>
         <input type="date" id="date" pattern="\d{2}-\d{2}">
         <button onclick="addSixMonths()">Calculate Halfy Day</button>
         <p id="result"></p>
@@ -147,4 +147,5 @@ END:VCALENDAR`;
     </div>
 </body>
 </html>
+
 
