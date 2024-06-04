@@ -77,8 +77,9 @@
         function addSixMonths() {
             const name = document.getElementById("name").value;
             const dateInput = document.getElementById("date").value;
-            const [year, month, day] = dateInput.split('-').map(Number);
-            const inputDate = new Date(year, month - 1, day);
+            const [month, day] = dateInput.split('-').map(Number);
+            const currentYear = new Date().getFullYear();
+            const inputDate = new Date(currentYear, month - 1, day);
 
             if (!name || isNaN(inputDate)) {
                 alert("Please enter your name and a valid date.");
@@ -135,7 +136,7 @@ END:VCALENDAR`;
         <label for="name">Enter your name:</label>
         <input type="text" id="name">
         <label for="date">Enter your date (MM-DD):</label>
-        <input type="date" id="date" pattern="\d{2}-\d{2}">
+        <input type="text" id="date" placeholder="MM-DD" pattern="\d{2}-\d{2}">
         <button onclick="addSixMonths()">Calculate Halfy Day</button>
         <p id="result"></p>
         <a id="downloadLink" href="#" download="halfy-day.ics" style="display: none;">
@@ -147,5 +148,6 @@ END:VCALENDAR`;
     </div>
 </body>
 </html>
+
 
 
