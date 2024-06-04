@@ -158,7 +158,11 @@ END:VCALENDAR`;
             <option value="12">December</option>
         </select>
         <select id="day">
-            ${Array.from({ length: 31 }, (_, i) => `<option value="${i + 1}">${i + 1}</option>`).join('')}
+            <script>
+                for (let i = 1; i <= 31; i++) {
+                    document.write(`<option value="${i}">${i}</option>`);
+                }
+            </script>
         </select>
         <button onclick="addSixMonths()">Calculate Halfy Day</button>
         <p id="result"></p>
@@ -171,8 +175,3 @@ END:VCALENDAR`;
     </div>
 </body>
 </html>
-
-
-
-
-
