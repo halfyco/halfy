@@ -3,10 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Half-Birthday Calculator</title>
+    <title>Halfy Day Calculator</title>
     <style>
+        @font-face {
+            font-family: 'Campton';
+            src: url('CamptonBold.otf') format('opentype'),
+                 url('CamptonBook.otf') format('opentype');
+            font-weight: bold;
+            font-style: normal;
+        }
+
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Campton', Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -17,6 +25,7 @@
         .container {
             text-align: center;
             background-color: #ffeb3b;
+            border: 5px solid #ffeb3b;
             border-radius: 50%;
             padding: 50px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -27,7 +36,7 @@
             color: #000;
         }
         .container input {
-            margin: 20px 0;
+            margin: 10px 0;
             padding: 10px;
             font-size: 1em;
             border: none;
@@ -58,31 +67,40 @@
             width: 100px;
             height: auto;
         }
+        .footer {
+            margin-top: 20px;
+            font-size: 1em;
+            color: #000;
+        }
     </style>
     <script>
         function addSixMonths() {
+            const name = document.getElementById("name").value;
             const dateInput = document.getElementById("date").value;
-            const inputDate = new Date(dateInput);
+            const [year, month, day] = dateInput.split('-').map(Number);
+            const inputDate = new Date(year, month - 1, day);
 
-            if (isNaN(inputDate)) {
-                alert("Please enter a valid date.");
+            if (!name || isNaN(inputDate)) {
+                alert("Please enter your name and a valid date.");
                 return;
             }
 
             const resultDate = new Date(inputDate);
             resultDate.setMonth(resultDate.getMonth() + 6);
 
-            const resultDateString = resultDate.toISOString().split('T')[0];
-            document.getElementById("result").innerText = "Half-Birthday: " + resultDateString;
+            const resultMonth = String(resultDate.getMonth() + 1).padStart(2, '0');
+            const resultDay = String(resultDate.getDate()).padStart(2, '0');
+            const resultDateString = `${resultMonth}-${resultDay}`;
+            document.getElementById("result").innerText = `${name}, your halfy day is on: ${resultDateString}`;
             document.getElementById("downloadLink").style.display = "block";
-            document.getElementById("downloadLink").setAttribute('href', generateICS(resultDate));
+            document.getElementById("downloadLink").setAttribute('href', generateICS(resultDate, name));
         }
 
-        function generateICS(date) {
+        function generateICS(date, name) {
             const event = {
                 start: date,
-                title: "Half-Birthday",
-                description: "Celebrate your half-birthday!",
+                title: `${name}'s Halfy Day`,
+                description: "Celebrate your halfy day!",
                 duration: { hours: 24 },
             };
 
@@ -113,14 +131,20 @@ END:VCALENDAR`;
         <div class="logo">
             <img src="logo.png" alt="Halfy Logo">
         </div>
-        <h1>Half-Birthday Calculator</h1>
-        <label for="date">Enter your birth date:</label>
-        <input type="date" id="date">
-        <button onclick="addSixMonths()">Calculate Half-Birthday</button>
+        <h1>Halfy Day Calculator</h1>
+        <label for="name">Enter your name:</label>
+        <input type="text" id="name">
+        <label for="date">Enter your birth date (MM-DD):</label>
+        <input type="date" id="date" pattern="\d{2}-\d{2}">
+        <button onclick="addSixMonths()">Calculate Halfy Day</button>
         <p id="result"></p>
-        <a id="downloadLink" href="#" download="half-birthday.ics" style="display: none;">
+        <a id="downloadLink" href="#" download="halfy-day.ics" style="display: none;">
             Download to Calendar
         </a>
+        <div class="footer">
+            <p>Visit us at <a href="https://www.halfy.co" target="_blank">www.halfy.co</a></p>
+        </div>
     </div>
 </body>
 </html>
+
